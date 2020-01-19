@@ -176,7 +176,7 @@ export type MeetupWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface MeetupUpdateWithoutAttendeesDataInput {
-  organizer?: Maybe<UserUpdateOneRequiredWithoutMyMeetupsInput>;
+  organizer?: Maybe<UserUpdateOneWithoutMyMeetupsInput>;
   title?: Maybe<String>;
   description?: Maybe<String>;
   location?: Maybe<String>;
@@ -298,7 +298,7 @@ export interface MeetupSubscriptionWhereInput {
 }
 
 export interface MeetupUpdateInput {
-  organizer?: Maybe<UserUpdateOneRequiredWithoutMyMeetupsInput>;
+  organizer?: Maybe<UserUpdateOneWithoutMyMeetupsInput>;
   title?: Maybe<String>;
   description?: Maybe<String>;
   location?: Maybe<String>;
@@ -314,10 +314,12 @@ export interface UserUpdateInput {
   meetupsAttending?: Maybe<MeetupUpdateManyWithoutAttendeesInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutMyMeetupsInput {
+export interface UserUpdateOneWithoutMyMeetupsInput {
   create?: Maybe<UserCreateWithoutMyMeetupsInput>;
   update?: Maybe<UserUpdateWithoutMyMeetupsDataInput>;
   upsert?: Maybe<UserUpsertWithoutMyMeetupsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -692,7 +694,7 @@ export interface UserUpdateManyWithoutMeetupsAttendingInput {
 
 export interface MeetupCreateWithoutAttendeesInput {
   id?: Maybe<ID_Input>;
-  organizer: UserCreateOneWithoutMyMeetupsInput;
+  organizer?: Maybe<UserCreateOneWithoutMyMeetupsInput>;
   title: String;
   description: String;
   location: String;
@@ -701,7 +703,7 @@ export interface MeetupCreateWithoutAttendeesInput {
 
 export interface MeetupCreateInput {
   id?: Maybe<ID_Input>;
-  organizer: UserCreateOneWithoutMyMeetupsInput;
+  organizer?: Maybe<UserCreateOneWithoutMyMeetupsInput>;
   title: String;
   description: String;
   location: String;

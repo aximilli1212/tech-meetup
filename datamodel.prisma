@@ -1,11 +1,11 @@
  type Meetup {
       id: ID! @id
-      organizer: User! @relation(link:INLINE,name: "UserEvents")
+      organizer: User @relation(link:INLINE,name: "UserEvents")
       title: String!
       description: String!
       location: String!
       date: DateTime!
-      attendees: [User!]! @relation(name: "EventAttendees")
+      attendees: [User] @relation(name: "EventAttendees")
     }
     type User {
       id: ID! @id

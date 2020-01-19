@@ -21,7 +21,7 @@ scalar Long
 
 type Meetup {
   id: ID!
-  organizer: User!
+  organizer: User
   title: String!
   description: String!
   location: String!
@@ -37,7 +37,7 @@ type MeetupConnection {
 
 input MeetupCreateInput {
   id: ID
-  organizer: UserCreateOneWithoutMyMeetupsInput!
+  organizer: UserCreateOneWithoutMyMeetupsInput
   title: String!
   description: String!
   location: String!
@@ -57,7 +57,7 @@ input MeetupCreateManyWithoutOrganizerInput {
 
 input MeetupCreateWithoutAttendeesInput {
   id: ID
-  organizer: UserCreateOneWithoutMyMeetupsInput!
+  organizer: UserCreateOneWithoutMyMeetupsInput
   title: String!
   description: String!
   location: String!
@@ -186,7 +186,7 @@ input MeetupSubscriptionWhereInput {
 }
 
 input MeetupUpdateInput {
-  organizer: UserUpdateOneRequiredWithoutMyMeetupsInput
+  organizer: UserUpdateOneWithoutMyMeetupsInput
   title: String
   description: String
   location: String
@@ -238,7 +238,7 @@ input MeetupUpdateManyWithWhereNestedInput {
 }
 
 input MeetupUpdateWithoutAttendeesDataInput {
-  organizer: UserUpdateOneRequiredWithoutMyMeetupsInput
+  organizer: UserUpdateOneWithoutMyMeetupsInput
   title: String
   description: String
   location: String
@@ -584,10 +584,12 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneRequiredWithoutMyMeetupsInput {
+input UserUpdateOneWithoutMyMeetupsInput {
   create: UserCreateWithoutMyMeetupsInput
   update: UserUpdateWithoutMyMeetupsDataInput
   upsert: UserUpsertWithoutMyMeetupsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
