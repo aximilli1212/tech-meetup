@@ -1,0 +1,50 @@
+mutation{
+    createPost(data:{name:"Ashrin",email:"Mongo@min.com"}){
+            name
+            email
+        }
+}
+
+#Get all Users
+query{
+    users{
+        name
+        email
+    }
+}
+
+#Create a post
+mutation{
+    createPost(data:{
+        title:"Mangolia",
+        body:"askin@askin.com",
+        published:true,
+        author:{
+            connect:{
+                id:"5e3177799bd11600079d8459"
+            }
+        }
+    }){
+        id
+        title
+        body
+        published
+        author{
+            id
+            name
+        }
+
+    }
+}
+
+#Get User with thier Posts
+
+query{
+    users{
+        id
+        name
+        posts{
+            title
+        }
+    }
+}
