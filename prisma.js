@@ -1,5 +1,5 @@
 import { Prisma } from 'prisma-binding';
 const prisma = new Prisma({
-    typeDefs:'',
+    typeDefs:'src',
     endpoint:'localhost:4460',
 })

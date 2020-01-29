@@ -1,6 +1,6 @@
 {
   "name": "Akokomarket Schema",
-  "schemaPath": "prisma-schema.js",
+  "schemaPath": "generated/prisma-client/prisma-schema.js",
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
