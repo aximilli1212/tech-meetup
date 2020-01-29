@@ -33,12 +33,10 @@ mutation{
             id
             name
         }
-
     }
 }
 
 #Get User with thier Posts
-
 query{
     users{
         id
