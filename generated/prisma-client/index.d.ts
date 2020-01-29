@@ -16,7 +16,6 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  meetup: (where?: MeetupWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -39,25 +38,6 @@ export interface Prisma {
    * Queries
    */
 
-  meetup: (where: MeetupWhereUniqueInput) => MeetupNullablePromise;
-  meetups: (args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Meetup>;
-  meetupsConnection: (args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => MeetupConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -83,22 +63,6 @@ export interface Prisma {
    * Mutations
    */
 
-  createMeetup: (data: MeetupCreateInput) => MeetupPromise;
-  updateMeetup: (args: {
-    data: MeetupUpdateInput;
-    where: MeetupWhereUniqueInput;
-  }) => MeetupPromise;
-  updateManyMeetups: (args: {
-    data: MeetupUpdateManyMutationInput;
-    where?: MeetupWhereInput;
-  }) => BatchPayloadPromise;
-  upsertMeetup: (args: {
-    where: MeetupWhereUniqueInput;
-    create: MeetupCreateInput;
-    update: MeetupUpdateInput;
-  }) => MeetupPromise;
-  deleteMeetup: (where: MeetupWhereUniqueInput) => MeetupPromise;
-  deleteManyMeetups: (where?: MeetupWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -124,9 +88,6 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  meetup: (
-    where?: MeetupSubscriptionWhereInput
-  ) => MeetupSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -140,300 +101,21 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type MeetupOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "location_ASC"
-  | "location_DESC"
-  | "date_ASC"
-  | "date_DESC";
-
-export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "name_ASC"
-  | "name_DESC";
+export type UserOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateWithoutMyMeetupsDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  meetupsAttending?: Maybe<MeetupUpdateManyWithoutAttendeesInput>;
-}
-
-export type MeetupWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface MeetupUpdateWithoutAttendeesDataInput {
-  organizer?: Maybe<UserUpdateOneWithoutMyMeetupsInput>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  location?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-}
-
-export interface MeetupWhereInput {
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  organizer?: Maybe<UserWhereInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
-  attendees_some?: Maybe<UserWhereInput>;
-  AND?: Maybe<MeetupWhereInput[] | MeetupWhereInput>;
-}
-
-export interface UserCreateWithoutMeetupsAttendingInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
   name: String;
-  myMeetups?: Maybe<MeetupCreateManyWithoutOrganizerInput>;
-}
-
-export interface MeetupUpdateWithWhereUniqueWithoutOrganizerInput {
-  where: MeetupWhereUniqueInput;
-  data: MeetupUpdateWithoutOrganizerDataInput;
-}
-
-export interface MeetupCreateManyWithoutOrganizerInput {
-  create?: Maybe<
-    MeetupCreateWithoutOrganizerInput[] | MeetupCreateWithoutOrganizerInput
-  >;
-  connect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-}
-
-export interface MeetupUpsertWithWhereUniqueWithoutAttendeesInput {
-  where: MeetupWhereUniqueInput;
-  update: MeetupUpdateWithoutAttendeesDataInput;
-  create: MeetupCreateWithoutAttendeesInput;
-}
-
-export interface MeetupCreateWithoutOrganizerInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  location: String;
-  date: DateTimeInput;
-  attendees?: Maybe<UserCreateManyWithoutMeetupsAttendingInput>;
-}
-
-export interface MeetupSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MeetupWhereInput>;
-  AND?: Maybe<MeetupSubscriptionWhereInput[] | MeetupSubscriptionWhereInput>;
-}
-
-export interface MeetupUpdateInput {
-  organizer?: Maybe<UserUpdateOneWithoutMyMeetupsInput>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  location?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-  attendees?: Maybe<UserUpdateManyWithoutMeetupsAttendingInput>;
 }
 
 export interface UserUpdateInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
   name?: Maybe<String>;
-  myMeetups?: Maybe<MeetupUpdateManyWithoutOrganizerInput>;
-  meetupsAttending?: Maybe<MeetupUpdateManyWithoutAttendeesInput>;
 }
 
-export interface UserUpdateOneWithoutMyMeetupsInput {
-  create?: Maybe<UserCreateWithoutMyMeetupsInput>;
-  update?: Maybe<UserUpdateWithoutMyMeetupsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutMyMeetupsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface MeetupUpdateManyMutationInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  location?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-}
-
-export interface MeetupUpsertWithWhereUniqueWithoutOrganizerInput {
-  where: MeetupWhereUniqueInput;
-  update: MeetupUpdateWithoutOrganizerDataInput;
-  create: MeetupCreateWithoutOrganizerInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface MeetupUpdateManyWithoutAttendeesInput {
-  create?: Maybe<
-    MeetupCreateWithoutAttendeesInput[] | MeetupCreateWithoutAttendeesInput
-  >;
-  delete?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  connect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  set?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  disconnect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  update?: Maybe<
-    | MeetupUpdateWithWhereUniqueWithoutAttendeesInput[]
-    | MeetupUpdateWithWhereUniqueWithoutAttendeesInput
-  >;
-  upsert?: Maybe<
-    | MeetupUpsertWithWhereUniqueWithoutAttendeesInput[]
-    | MeetupUpsertWithWhereUniqueWithoutAttendeesInput
-  >;
-  deleteMany?: Maybe<MeetupScalarWhereInput[] | MeetupScalarWhereInput>;
-  updateMany?: Maybe<
-    | MeetupUpdateManyWithWhereNestedInput[]
-    | MeetupUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
+export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-}
-
-export interface MeetupUpdateWithWhereUniqueWithoutAttendeesInput {
-  where: MeetupWhereUniqueInput;
-  data: MeetupUpdateWithoutAttendeesDataInput;
-}
-
-export interface UserCreateOneWithoutMyMeetupsInput {
-  create?: Maybe<UserCreateWithoutMyMeetupsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserWhereInput {
@@ -451,34 +133,6 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -493,236 +147,7 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  myMeetups_some?: Maybe<MeetupWhereInput>;
-  meetupsAttending_some?: Maybe<MeetupWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface MeetupCreateManyWithoutAttendeesInput {
-  create?: Maybe<
-    MeetupCreateWithoutAttendeesInput[] | MeetupCreateWithoutAttendeesInput
-  >;
-  connect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-}
-
-export interface MeetupUpdateWithoutOrganizerDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  location?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-  attendees?: Maybe<UserUpdateManyWithoutMeetupsAttendingInput>;
-}
-
-export interface UserCreateManyWithoutMeetupsAttendingInput {
-  create?: Maybe<
-    | UserCreateWithoutMeetupsAttendingInput[]
-    | UserCreateWithoutMeetupsAttendingInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface MeetupScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  location?: Maybe<String>;
-  location_not?: Maybe<String>;
-  location_in?: Maybe<String[] | String>;
-  location_not_in?: Maybe<String[] | String>;
-  location_lt?: Maybe<String>;
-  location_lte?: Maybe<String>;
-  location_gt?: Maybe<String>;
-  location_gte?: Maybe<String>;
-  location_contains?: Maybe<String>;
-  location_not_contains?: Maybe<String>;
-  location_starts_with?: Maybe<String>;
-  location_not_starts_with?: Maybe<String>;
-  location_ends_with?: Maybe<String>;
-  location_not_ends_with?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-  date_not?: Maybe<DateTimeInput>;
-  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  date_lt?: Maybe<DateTimeInput>;
-  date_lte?: Maybe<DateTimeInput>;
-  date_gt?: Maybe<DateTimeInput>;
-  date_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<MeetupScalarWhereInput[] | MeetupScalarWhereInput>;
-  OR?: Maybe<MeetupScalarWhereInput[] | MeetupScalarWhereInput>;
-  NOT?: Maybe<MeetupScalarWhereInput[] | MeetupScalarWhereInput>;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-}
-
-export interface MeetupUpdateManyWithWhereNestedInput {
-  where: MeetupScalarWhereInput;
-  data: MeetupUpdateManyDataInput;
-}
-
-export interface UserUpdateManyDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-}
-
-export interface MeetupUpdateManyDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  location?: Maybe<String>;
-  date?: Maybe<DateTimeInput>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutMeetupsAttendingInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutMeetupsAttendingDataInput;
-  create: UserCreateWithoutMeetupsAttendingInput;
-}
-
-export interface UserUpsertWithoutMyMeetupsInput {
-  update: UserUpdateWithoutMyMeetupsDataInput;
-  create: UserCreateWithoutMyMeetupsInput;
-}
-
-export interface UserCreateWithoutMyMeetupsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name: String;
-  meetupsAttending?: Maybe<MeetupCreateManyWithoutAttendeesInput>;
-}
-
-export interface MeetupUpdateManyWithoutOrganizerInput {
-  create?: Maybe<
-    MeetupCreateWithoutOrganizerInput[] | MeetupCreateWithoutOrganizerInput
-  >;
-  delete?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  connect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  set?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  disconnect?: Maybe<MeetupWhereUniqueInput[] | MeetupWhereUniqueInput>;
-  update?: Maybe<
-    | MeetupUpdateWithWhereUniqueWithoutOrganizerInput[]
-    | MeetupUpdateWithWhereUniqueWithoutOrganizerInput
-  >;
-  upsert?: Maybe<
-    | MeetupUpsertWithWhereUniqueWithoutOrganizerInput[]
-    | MeetupUpsertWithWhereUniqueWithoutOrganizerInput
-  >;
-  deleteMany?: Maybe<MeetupScalarWhereInput[] | MeetupScalarWhereInput>;
-  updateMany?: Maybe<
-    | MeetupUpdateManyWithWhereNestedInput[]
-    | MeetupUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateWithoutMeetupsAttendingDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  myMeetups?: Maybe<MeetupUpdateManyWithoutOrganizerInput>;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutMeetupsAttendingInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutMeetupsAttendingDataInput;
-}
-
-export interface UserUpdateManyWithoutMeetupsAttendingInput {
-  create?: Maybe<
-    | UserCreateWithoutMeetupsAttendingInput[]
-    | UserCreateWithoutMeetupsAttendingInput
-  >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutMeetupsAttendingInput[]
-    | UserUpdateWithWhereUniqueWithoutMeetupsAttendingInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutMeetupsAttendingInput[]
-    | UserUpsertWithWhereUniqueWithoutMeetupsAttendingInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface MeetupCreateWithoutAttendeesInput {
-  id?: Maybe<ID_Input>;
-  organizer?: Maybe<UserCreateOneWithoutMyMeetupsInput>;
-  title: String;
-  description: String;
-  location: String;
-  date: DateTimeInput;
-}
-
-export interface MeetupCreateInput {
-  id?: Maybe<ID_Input>;
-  organizer?: Maybe<UserCreateOneWithoutMyMeetupsInput>;
-  title: String;
-  description: String;
-  location: String;
-  date: DateTimeInput;
-  attendees?: Maybe<UserCreateManyWithoutMeetupsAttendingInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name: String;
-  myMeetups?: Maybe<MeetupCreateManyWithoutOrganizerInput>;
-  meetupsAttending?: Maybe<MeetupCreateManyWithoutAttendeesInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -734,345 +159,12 @@ export interface UserSubscriptionWhereInput {
   AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  email: String;
-  password: String;
-  name: String;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface MeetupSubscriptionPayload {
-  mutation: MutationType;
-  node: Meetup;
-  updatedFields: String[];
-  previousValues: MeetupPreviousValues;
-}
-
-export interface MeetupSubscriptionPayloadPromise
-  extends Promise<MeetupSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MeetupPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MeetupPreviousValuesPromise>() => T;
-}
-
-export interface MeetupSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MeetupSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MeetupSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MeetupPreviousValuesSubscription>() => T;
-}
-
-export interface MeetupPreviousValues {
-  id: ID_Output;
-  title: String;
-  description: String;
-  location: String;
-  date: DateTimeOutput;
-}
-
-export interface MeetupPreviousValuesPromise
-  extends Promise<MeetupPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  location: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
-}
-
-export interface MeetupPreviousValuesSubscription
-  extends Promise<AsyncIterator<MeetupPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  location: () => Promise<AsyncIterator<String>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Meetup {
-  id: ID_Output;
-  title: String;
-  description: String;
-  location: String;
-  date: DateTimeOutput;
-}
-
-export interface MeetupPromise extends Promise<Meetup>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  organizer: <T = UserPromise>() => T;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  location: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
-  attendees: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface MeetupSubscription
-  extends Promise<AsyncIterator<Meetup>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  organizer: <T = UserSubscription>() => T;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  location: () => Promise<AsyncIterator<String>>;
-  date: () => Promise<AsyncIterator<DateTimeOutput>>;
-  attendees: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface MeetupNullablePromise
-  extends Promise<Meetup | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  organizer: <T = UserPromise>() => T;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  location: () => Promise<String>;
-  date: () => Promise<DateTimeOutput>;
-  attendees: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface User {
-  id: ID_Output;
-  email: String;
-  password: String;
-  name: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  myMeetups: <T = FragmentableArray<Meetup>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  meetupsAttending: <T = FragmentableArray<Meetup>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  myMeetups: <T = Promise<AsyncIterator<MeetupSubscription>>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  meetupsAttending: <T = Promise<AsyncIterator<MeetupSubscription>>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  name: () => Promise<String>;
-  myMeetups: <T = FragmentableArray<Meetup>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  meetupsAttending: <T = FragmentableArray<Meetup>>(args?: {
-    where?: MeetupWhereInput;
-    orderBy?: MeetupOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface MeetupConnection {
-  pageInfo: PageInfo;
-  edges: MeetupEdge[];
-}
-
-export interface MeetupConnectionPromise
-  extends Promise<MeetupConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MeetupEdge>>() => T;
-  aggregate: <T = AggregateMeetupPromise>() => T;
-}
-
-export interface MeetupConnectionSubscription
-  extends Promise<AsyncIterator<MeetupConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MeetupEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMeetupSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface AggregateUser {
@@ -1107,53 +199,134 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface MeetupEdge {
-  node: Meetup;
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserEdge {
+  node: User;
   cursor: String;
 }
 
-export interface MeetupEdgePromise extends Promise<MeetupEdge>, Fragmentable {
-  node: <T = MeetupPromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface MeetupEdgeSubscription
-  extends Promise<AsyncIterator<MeetupEdge>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = MeetupSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateMeetup {
-  count: Int;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface AggregateMeetupPromise
-  extends Promise<AggregateMeetup>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface AggregateMeetupSubscription
-  extends Promise<AsyncIterator<AggregateMeetup>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export interface User {
+  id: ID_Output;
+  name: String;
+}
 
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
 
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -1163,25 +336,26 @@ export type String = string;
 export type Long = string;
 
 /*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Boolean = boolean;
 
 /**
  * Model Metadata
  */
 
 export const models: Model[] = [
-  {
-    name: "Meetup",
-    embedded: false
-  },
   {
     name: "User",
     embedded: false
