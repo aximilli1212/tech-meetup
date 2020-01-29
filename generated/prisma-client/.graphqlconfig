@@ -1,0 +1,15 @@
+{
+  "name": "Akokomarket Schema",
+  "schemaPath": "prisma-schema.js",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:4460",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      }
+    }
+  }
+}
