@@ -33,18 +33,50 @@ mutation{
             id
             name
         }
-
     }
 }
 
 #Get User with thier Posts
-
 query{
     users{
         id
         name
         posts{
             title
+        }
+    }
+}
+
+#Update a field on post
+
+mutation{
+    updatePost(data:{published:true},
+        where:{id:"5e318fd99bd11600079d845c"}){
+        body
+        published
+    }
+}
+
+
+mutation{
+    createComment(data: {
+        text:"One Ticket",
+        author:{
+            connect:{
+                id:"5e31778f9bd11600079d845a"
+            }
+        },
+        post:{
+            id:"5e318fd99bd11600079d845c"
+        }
+    }){
+        id
+        text
+        author{
+            name
+        }
+        post{
+            body
         }
     }
 }
