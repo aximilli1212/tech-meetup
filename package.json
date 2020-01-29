@@ -4,7 +4,8 @@
   "description": "Tech meetup practice with graphql and Prisma and VueJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "get-schema": "graphql get-schema -p prisma"
   },
   "repository": {
     "type": "git",
