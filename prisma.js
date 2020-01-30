@@ -1,6 +1,6 @@
 import { Prisma } from 'prisma-binding';
 const prisma = new Prisma({
-    typeDefs:'src',
+    typeDefs:'./generated/prisma-client/prisma-schema',
     endpoint:'http://localhost:4460',
 });
 
