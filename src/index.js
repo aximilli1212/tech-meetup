@@ -1,36 +1,24 @@
-// import { GraphQLServer, PubSub } from 'graphql-yoga'
-const { GraphQLServer, PubSub } = require('graphql-yoga')
-import db from './db'
-import Query from './resolvers/Query'
-import Mutation from './resolvers/Mutation'
-import Subscription from './resolvers/Subscription'
-import User from './resolvers/User'
-import Post from './resolvers/Post'
-import Comment from './resolvers/Comment'
+const { prisma } = require('../generated/prisma-client');
+const { ApolloServer, gql } = require('apollo-server');
+const typeDefs = require("../generated/prisma-client/prisma-schema").typeDefs;
+const Query = require("./resolvers/Query");
+const Mutation = require("./resolvers/Mutation");
 
-import "../prisma";
-
-const pubsub = new PubSub()
-//
-const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
-    resolvers: {
-        Query,
-        Mutation,
-        Subscription,
-        User,
-        Post,
-        Comment
-    },
-    context: {
-        db,
-        pubsub
+const resolvers = {
+    Query,
+    Mutation,
+    Node:{
+        __resolveType(){
+            return null;
+        }
     }
-})
+}
 
-server.start(() => {
-    console.log('The server is up!')
+const server = new ApolloServer({
+    typeDefs,
+    resolvers });
 
-})
-
-console.log("pooped");
+// The `listen` method launches a web server.
+server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+});
