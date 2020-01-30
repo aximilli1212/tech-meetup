@@ -1,17 +1,25 @@
 const { prisma } = require('../generated/prisma-client');
-const { GraphQLServer } = require('graphql-yoga');
+const { ApolloServer, gql } = require('apollo-server');
 const typeDefs = require("../generated/prisma-client/prisma-schema").typeDefs;
+const Query = require("./resolvers/Query");
+const Mutation = require("./resolvers/Mutation");
 
 
 const resolvers = {
-
+    Query,
+    Mutation,
+    Node:{
+        __resolveType() {
+            return null;
+        }
+    }
 }
 
-const server = new GraphQLServer({
-    typeDefs: typeDefs,
-    resolvers,
-    context: {
-        prisma,
-    },
-})
-server.start(() => console.log('Server is running on http://localhost:4000'))
+const server = new ApolloServer({
+    typeDefs,
+    resolvers });
+
+// The `listen` method launches a web server.
+server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+});
