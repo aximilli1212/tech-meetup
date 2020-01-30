@@ -4,12 +4,11 @@ const typeDefs = require("../generated/prisma-client/prisma-schema").typeDefs;
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 
-
 const resolvers = {
     Query,
     Mutation,
     Node:{
-        __resolveType() {
+        __resolveType(){
             return null;
         }
     }

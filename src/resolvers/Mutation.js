@@ -1,6 +1,6 @@
 
 const Mutations = {
-    async signup(_, args, context, info) {
+    async updateComment(_, args, context, info) {
         args.email = args.email.toLowerCase();
         if (args.password !== args.confirmPassword) {
             throw new Error("Passwords didn't match");

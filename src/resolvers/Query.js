@@ -7,16 +7,6 @@ const Query = {
     comments(root, args, context) {
         return context.prisma.comments();
     },
-    user(_, args, context, info) {
-        return context.prisma.query.user(
-            {
-                where: {
-                    id: args.id,
-                },
-            },
-            info
-        );
-    },
 
 }
 
