@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/aximilli1212/tech-meetup#readme",
   "dependencies": {
-    "apollo-server": "^2.9.16",
+    "apollo-server": "^2.25.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "graphql": "^14.6.0",
